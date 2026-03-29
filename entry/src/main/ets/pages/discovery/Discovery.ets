@@ -1,6 +1,6 @@
 import ListMenuItem from '../../component/ListMenuItem'
 import WechatToolbar from '../../component/WechatToolbar'
-
+import router from '@ohos.router';
 @Preview
 @Component
 export default struct Discovery {
@@ -30,6 +30,10 @@ export default struct Discovery {
       ListMenuItem({ title: "听一听",
         iconSrc: $r('app.media.ic_listen')
       })
+        .onClick(() => {
+          // 重点：路径必须正确！
+          router.pushUrl({ url: 'pages/discovery/Listen' });
+        })
 
       Divider()
         .vertical(false)
