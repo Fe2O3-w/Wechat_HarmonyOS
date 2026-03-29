@@ -5,6 +5,7 @@
     "pages/chat/ChatPage",
     "pages/qrcode/MyQrCodePage",
     "pages/HardwareIndexPage",
-    "pages/mine/Service"
+    "pages/mine/Service",
+    "pages/mine/setting/setting"
   ]
 }

@@ -10,8 +10,8 @@ export default struct Mine {
   @State imgPath: string = ""
 
   build() {
-    Column() {
 
+    Column() {
       Row() {
         Image(this.imgPath ? this.imgPath : $r('app.media.ic_user_head1'))
           .width(70)
@@ -144,11 +144,17 @@ export default struct Mine {
         .color("#f3f3f3")
         .strokeWidth(10)
         .lineCap(LineCapStyle.Round)
+
+
       ListMenuItem({
         title: "设置",
-        iconSrc: $r('app.media.ic_setting')
+        iconSrc: $r('app.media.ic_setting'),
+        itemClick: () => {
+          router.pushUrl({ url: 'pages/mine/setting/setting' })
+        }
       })
-        .onClick(unDevTip)
+
+
     }
     .width("100%")
     .height("100%")

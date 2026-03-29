@@ -77,8 +77,8 @@ export default struct Service {
           // 信用卡还款
           Column() {
             Image($r('app.media.xinyongka'))
-              .width(40)
-              .height(40)
+              .width(25)
+              .height(25)
             Text("信用卡还款")
               .fontSize(13)
               .margin({ top:6 })
@@ -88,8 +88,8 @@ export default struct Service {
           // 理财通
           Column() {
             Image($r('app.media.licaitong'))
-              .width(40)
-              .height(40)
+              .width(25)
+              .height(25)
             Text("理财通")
               .fontSize(13)
               .margin({ top:6 })
@@ -99,8 +99,8 @@ export default struct Service {
           // 保险服务
           Column() {
             Image($r('app.media.baoxianfuwu'))
-              .width(40)
-              .height(40)
+              .width(25)
+              .height(25)
             Text("保险服务")
               .fontSize(13)
               .margin({ top:6 })
@@ -125,13 +125,14 @@ export default struct Service {
           .margin({ left:15, top:15, bottom:10 })
           .alignSelf(ItemAlign.Start)
 
+
         Flex({ wrap: FlexWrap.Wrap }) {
-          Column() { Image($r('app.media.shoujichongzhi')).width(40).height(40); Text("手机充值").fontSize(13).margin({ top:6 }) }.width("25%").margin({ bottom: 20 })
-          Column() { Image($r('app.media.shenghuojiaofei')).width(40).height(40); Text("生活缴费").fontSize(13).margin({ top:6 }) }.width("25%").margin({ bottom: 20 })
-          Column() { Image($r('app.media.Qbichongzhi')).width(40).height(40); Text("Q币充值").fontSize(13).margin({ top:6 }) }.width("25%").margin({ bottom: 20 })
-          Column() { Image($r('app.media.chengshifuwu')).width(40).height(40); Text("城市服务").fontSize(13).margin({ top:6 }) }.width("25%").margin({ bottom: 20 })
-          Column() { Image($r('app.media.tengxungongyi')).width(40).height(40); Text("腾讯公益").fontSize(13).margin({ top:6 }) }.width("25%").margin({ bottom: 20 })
-          Column() { Image($r('app.media.yiliaojiankang')).width(40).height(40); Text("医疗健康").fontSize(13).margin({ top:6 }) }.width("25%").margin({ bottom: 20 })
+          Column() { Image($r('app.media.shoujichongzhi')).width(25).height(25); Text("手机充值").fontSize(13).margin({ top:6 }) }.width("25%").margin({ bottom: 20 })
+          Column() { Image($r('app.media.shenghuojiaofei')).width(25).height(25); Text("生活缴费").fontSize(13).margin({ top:6 }) }.width("25%").margin({ bottom: 20 })
+          Column() { Image($r('app.media.Qbichongzhi')).width(25).height(25); Text("Q币充值").fontSize(13).margin({ top:6 }) }.width("25%").margin({ bottom: 20 })
+          Column() { Image($r('app.media.chengshifuwu')).width(25).height(25); Text("城市服务").fontSize(13).margin({ top:6 }) }.width("25%").margin({ bottom: 20 })
+          Column() { Image($r('app.media.tengxungongyi')).width(25).height(25); Text("腾讯公益").fontSize(13).margin({ top:6 }) }.width("25%").margin({ bottom: 20 })
+          Column() { Image($r('app.media.yiliaojiankang')).width(25).height(25); Text("医疗健康").fontSize(13).margin({ top:6 }) }.width("25%").margin({ bottom: 20 })
         }
         .width("100%")
         .padding({ bottom:15 })
