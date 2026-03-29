@@ -1,0 +1,40 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "module description"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "微信鸿蒙版"
+    },
+    {
+      "name": "net_permission_reason",
+      "value": "APP需要联网"
+    },
+    {
+      "name": "camera_permission_reason",
+      "value": "用于拍摄照片发送给好友"
+    },
+    {
+      "name": "read_media_permission_reason",
+      "value": "用于从相册选择图片或表情包发送给好友"
+    },
+    {
+      "name": "write_media_permission_reason",
+      "value": "用于保存聊天中收到的图片"
+    },
+    {
+      "name": "net_info_permission_reason",
+      "value": "需要解析网络状态"
+    },
+    {
+      "name": "voice_reason",
+      "value": "用于录制并发送语音消息"
+    }
+  ]
+}
