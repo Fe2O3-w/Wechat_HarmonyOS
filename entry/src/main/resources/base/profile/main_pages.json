@@ -1,0 +1,11 @@
+{
+  "src": [
+    "pages/Login",
+    "pages/Register",
+    "pages/Index",
+    "pages/search/SearchPage",
+    "pages/chat/ChatPage",
+    "pages/qrcode/MyQrCodePage",
+    "pages/HardwareIndexPage"
+  ]
+}

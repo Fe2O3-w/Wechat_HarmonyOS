@@ -1,0 +1,1 @@
+export const BASE_URL = "http://192.168.10.1:8080"  //该成自己后端服务器的IP
