@@ -3,8 +3,12 @@ import fs from '@ohos.file.fs';
 import { BusinessError } from '@kit.BasicServicesKit';
 import { camera, cameraPicker } from '@kit.CameraKit';
 import { PermissionUtils } from './PermissionUtils';
+<<<<<<< HEAD
 import fileAccess from '@ohos.file.fileAccess'
 import { common } from '@kit.AbilityKit'
+=======
+
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
 /**
  *  相机相册访问工具
  * @author www.icheny.cn
@@ -81,8 +85,12 @@ export class PhotoPickerUtils {
             primaryButton: {
               value: '拒绝',
               action: () => {
+<<<<<<< HEAD
                 onFailed("用户拒绝授" +
                   "予相机权限");
+=======
+                onFailed("用户拒绝授予相机权限");
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
               }
             },
             secondaryButton: {
@@ -144,6 +152,7 @@ export class PhotoPickerUtils {
     }
     return ""
   }
+<<<<<<< HEAD
 
   /**
    * 将相册 URI 拷贝到应用 filesDir（非缓存目录），用于朋友圈等需要退出应用后仍可加载的图片。
@@ -179,4 +188,6 @@ export class PhotoPickerUtils {
     }
     return ""
   }
+=======
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
 }

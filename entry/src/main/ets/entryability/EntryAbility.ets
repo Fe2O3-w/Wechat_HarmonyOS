@@ -9,7 +9,10 @@ export default class EntryAbility extends UIAbility {
 
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onCreate');
+<<<<<<< HEAD
     PersistentStorage.persistProp('momentsList', '');
+=======
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
   }
 
   onDestroy() {

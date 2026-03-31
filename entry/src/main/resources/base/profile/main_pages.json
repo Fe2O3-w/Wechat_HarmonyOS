@@ -5,7 +5,13 @@
     "pages/chat/ChatPage",
     "pages/qrcode/MyQrCodePage",
     "pages/HardwareIndexPage",
+<<<<<<< HEAD
     "pages/discovery/moments/MomentsPage",
     "pages/discovery/moments/PostMomentPage"
   ]
 }
+=======
+    "pages/discovery/Listen"
+  ]
+}
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d

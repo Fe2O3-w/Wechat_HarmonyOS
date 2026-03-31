@@ -18,6 +18,7 @@
     },
     {
       "name": "camera_permission_reason",
+<<<<<<< HEAD
       "value": "需要相机权限进行照片上传"
     },
     {
@@ -27,6 +28,17 @@
     {
       "name": "write_media_permission_reason",
       "value": "需要拍照进行照片上传"
+=======
+      "value": "用于拍摄照片发送给好友"
+    },
+    {
+      "name": "read_media_permission_reason",
+      "value": "用于从相册选择图片或表情包发送给好友"
+    },
+    {
+      "name": "write_media_permission_reason",
+      "value": "用于保存聊天中收到的图片"
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
     },
     {
       "name": "net_info_permission_reason",
@@ -34,7 +46,11 @@
     },
     {
       "name": "voice_reason",
+<<<<<<< HEAD
       "value": "用于获取用户的录音"
+=======
+      "value": "用于录制并发送语音消息"
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
     }
   ]
 }

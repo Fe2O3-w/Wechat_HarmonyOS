@@ -13,9 +13,13 @@
         "name": "ohos.permission.INTERNET",
         "reason": "$string:net_permission_reason",
         "usedScene": {
+<<<<<<< HEAD
           "abilities": [
             "EntryAbility"
           ],
+=======
+          "abilities": ["EntryAbility"],
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
           "when": "inuse"
         }
       },
@@ -23,19 +27,48 @@
         "name": "ohos.permission.CAMERA",
         "reason": "$string:camera_permission_reason",
         "usedScene": {
+<<<<<<< HEAD
           "abilities": [
             "EntryAbility"
           ],
+=======
+          "abilities": ["EntryAbility"],
+          "when": "inuse"
+        }
+      },
+      // ✅ HarmonyOS NEXT 新媒体权限（替代旧的 READ/WRITE_MEDIA）
+      {
+        "name": "ohos.permission.READ_IMAGEVIDEO",
+        "reason": "$string:read_media_permission_reason",
+        "usedScene": {
+          "abilities": ["EntryAbility"],
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
           "when": "inuse"
         }
       },
       {
+<<<<<<< HEAD
         "name": "ohos.permission.READ_MEDIA",
         "reason": "$string:read_media_permission_reason",
         "usedScene": {
           "abilities": [
             "EntryAbility"
           ],
+=======
+        "name": "ohos.permission.WRITE_IMAGEVIDEO",
+        "reason": "$string:write_media_permission_reason",
+        "usedScene": {
+          "abilities": ["EntryAbility"],
+          "when": "inuse"
+        }
+      },
+      // ✅ 保留旧权限做向下兼容（可选）
+      {
+        "name": "ohos.permission.READ_MEDIA",
+        "reason": "$string:read_media_permission_reason",
+        "usedScene": {
+          "abilities": ["EntryAbility"],
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
           "when": "inuse"
         }
       },
@@ -43,9 +76,13 @@
         "name": "ohos.permission.WRITE_MEDIA",
         "reason": "$string:write_media_permission_reason",
         "usedScene": {
+<<<<<<< HEAD
           "abilities": [
             "EntryAbility"
           ],
+=======
+          "abilities": ["EntryAbility"],
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
           "when": "inuse"
         }
       },
@@ -53,18 +90,26 @@
         "name": "ohos.permission.GET_NETWORK_INFO",
         "reason": "$string:net_info_permission_reason",
         "usedScene": {
+<<<<<<< HEAD
           "abilities": [
             "EntryAbility"
           ],
+=======
+          "abilities": ["EntryAbility"],
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
           "when": "inuse"
         }
       },
       {
         "name": "ohos.permission.VIBRATE",
         "usedScene": {
+<<<<<<< HEAD
           "abilities": [
             "EntryAbility"
           ],
+=======
+          "abilities": ["EntryAbility"],
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
           "when": "inuse"
         }
       },
@@ -72,10 +117,16 @@
         "name": "ohos.permission.MICROPHONE",
         "reason": "$string:voice_reason",
         "usedScene": {
+<<<<<<< HEAD
           "abilities": [
             "FormAbility"
           ],
           "when": "always"
+=======
+          // ✅ 修正：改为 EntryAbility，FormAbility 一般不需要麦克风
+          "abilities": ["EntryAbility"],
+          "when": "inuse"
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
         }
       }
     ],
@@ -94,12 +145,17 @@
         "exported": true,
         "skills": [
           {
+<<<<<<< HEAD
             "entities": [
               "entity.system.home"
             ],
             "actions": [
               "action.system.home"
             ]
+=======
+            "entities": ["entity.system.home"],
+            "actions": ["action.system.home"]
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
           }
         ]
       }

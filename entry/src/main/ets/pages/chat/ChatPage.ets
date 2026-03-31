@@ -13,6 +13,7 @@ import { AudioCaptureManager, RecordFile } from '../../utils/AudioCapturerManage
 import { componentUtils } from '@kit.ArkUI';
 import { vibrator } from '@kit.SensorServiceKit';
 import { PermissionUtils } from '../../utils/PermissionUtils';
+<<<<<<< HEAD
 
 enum WXInputType {
   /**
@@ -22,10 +23,18 @@ enum WXInputType {
   /**
    * 文本输入
    */
+=======
+import EmojiPanel from '../../component/EmojiPanel';
+import ChatMorePanel from '../../component/ChatMorePanel';
+
+enum WXInputType {
+  voice = 0,
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
   keyboard = 1
 }
 
 enum MessageType {
+<<<<<<< HEAD
   /**
    * 声音
    */
@@ -61,6 +70,18 @@ class ChatMessage {
   /**
    * 是否显示转好的文字
    */
+=======
+  voice = 0,
+  text = 1
+}
+
+class ChatMessage {
+  type: MessageType
+  content: string
+  time: string
+  duration?: number
+  translateText?: string
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
   isShowTranslateText: boolean = false
 
   constructor(type: MessageType, content: string, duration?: number, translateText?: string) {
@@ -74,6 +95,7 @@ class ChatMessage {
 }
 
 enum PressCancelVoicePostText {
+<<<<<<< HEAD
   // 没有长按
   none = 0,
   //   长按 没有选中“取消发送”或者"转语音"
@@ -87,6 +109,14 @@ enum PressCancelVoicePostText {
 /**
  * 长按时，手指的坐标
  */
+=======
+  none = 0,
+  pressing = 1,
+  cancelVoice = 2,
+  postText = 3
+}
+
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
 interface ScreenOffset {
   x: number
   y: number
@@ -104,6 +134,14 @@ export default struct ChatPage {
   private keyboardHeight: number = 0
   @State private funcBarHeight: number = 0;
   @State private showFuncBar: boolean = false;
+<<<<<<< HEAD
+=======
+
+  // ✅ 新增：表情面板和更多面板的显示状态
+  @State private showEmojiPanel: boolean = false;
+  @State private showMorePanel: boolean = false;
+
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
   @State private dataList: ChatContentItemData[] = [
     {
       name: "鲁班",
@@ -133,8 +171,12 @@ export default struct ChatPage {
       msgType: 0,
       self: true,
       msg: "我要迟到了！！！",
+<<<<<<< HEAD
     }
     ,
+=======
+    },
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
     {
       name: "王昭君",
       headSrc: $r("app.media.ic_user_head3"),
@@ -142,16 +184,24 @@ export default struct ChatPage {
       self: false,
       msg: "",
       img: $r("app.media.ic_hahaha")
+<<<<<<< HEAD
     }
     ,
+=======
+    },
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
     {
       name: "王昭君",
       headSrc: $r("app.media.ic_user_head3"),
       msgType: 0,
       self: false,
       msg: "那赶紧粗发吧，哈哈哈哈哈哈哈",
+<<<<<<< HEAD
     }
     ,
+=======
+    },
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
     {
       name: "鲁班",
       headSrc: $r("app.media.ic_user_head2"),
@@ -160,6 +210,7 @@ export default struct ChatPage {
       msg: "嗯嗯，不说了，这就飞奔过去。。。",
     }
   ]
+<<<<<<< HEAD
   // 输入框内容
   @State
   textValue: string = ""
@@ -198,10 +249,28 @@ export default struct ChatPage {
     if (!this.textValue.trim()) {
       return
     }
+=======
+
+  @State textValue: string = ""
+  @State inputType: WXInputType = WXInputType.keyboard
+  @State voiceToText: string = ""
+  @State chatList: ChatMessage[] = []
+  @State showTalkContainer: boolean = false
+  @State pressCancelVoicePostText: PressCancelVoicePostText = PressCancelVoicePostText.none
+  settings: RenderingContextSettings = new RenderingContextSettings(true)
+  context: CanvasRenderingContext2D = new CanvasRenderingContext2D(this.settings)
+  voiceTimeId: number = -1
+  bubbleScreenOffset: ScreenOffset = { x: 0, y: 0, width: 0, height: 0 }
+  recordFileName: string = ""
+
+  sendTextMessage = () => {
+    if (!this.textValue.trim()) return
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
     const chat = new ChatMessage(MessageType.text, this.textValue.trim())
     this.chatList.push(chat)
     this.textValue = ""
   }
+<<<<<<< HEAD
   // 按住说话 持续触发
   onPressTalk = async (event: TouchEvent) => {
     if (event.type === TouchType.Down) {
@@ -251,6 +320,36 @@ export default struct ChatPage {
         this.voiceToText = ''
       } else {
         // 发送录音
+=======
+
+  onPressTalk = async (event: TouchEvent) => {
+    if (event.type === TouchType.Down) {
+      this.pressCancelVoicePostText = PressCancelVoicePostText.pressing
+      this.showTalkContainer = true
+      this.startVibration()
+      this.onStartRecord()
+      this.onStartSpeechRecognize()
+    } else if (event.type === TouchType.Move) {
+      this.pressCancelVoicePostText = PressCancelVoicePostText.pressing
+      const x = event.touches[0].displayX
+      const y = event.touches[0].displayY
+      let isTouchX = x <= this.bubbleScreenOffset.width / 2 && y < this.bubbleScreenOffset.y
+      let isTouchText = x > this.bubbleScreenOffset.width / 2 && y < this.bubbleScreenOffset.y
+      if (isTouchX) {
+        this.pressCancelVoicePostText = PressCancelVoicePostText.cancelVoice
+      } else if (isTouchText) {
+        this.pressCancelVoicePostText = PressCancelVoicePostText.postText
+      }
+    } else if (event.type === TouchType.Up) {
+      this.showTalkContainer = false
+      const res = await this.stopRecord()
+      SpeechRecognizerManager.release()
+      if (this.pressCancelVoicePostText === PressCancelVoicePostText.postText) {
+        this.postText()
+      } else if (this.pressCancelVoicePostText === PressCancelVoicePostText.cancelVoice) {
+        this.voiceToText = ''
+      } else {
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
         this.postVoice(res)
       }
     }
@@ -261,11 +360,20 @@ export default struct ChatPage {
     await window.getLastWindow(getContext(this)).then(currentWindow => {
       currentWindow.on('keyboardHeightChange', (height) => {
         this.keyboardHeight = height;
+<<<<<<< HEAD
+=======
+        // ✅ 键盘弹出时，收起表情/更多面板
+        if (height > 0) {
+          this.showEmojiPanel = false
+          this.showMorePanel = false
+        }
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
       })
     })
   }
 
   onBackPress() {
+<<<<<<< HEAD
     return this.keyboardHeight > 0
   }
 
@@ -288,6 +396,30 @@ export default struct ChatPage {
     //   生成消息文件
     const voiceChat = new ChatMessage(MessageType.voice, res.recordFilePath, duration)
     //   插入到消息数组中
+=======
+    // ✅ 如果面板打开，先关闭面板
+    if (this.showEmojiPanel || this.showMorePanel) {
+      this.showEmojiPanel = false
+      this.showMorePanel = false
+      return true
+    }
+    return this.keyboardHeight > 0
+  }
+
+  onStartRecord = () => {
+    this.recordFileName = Date.now().toString()
+    AudioCaptureManager.startRecord(this.recordFileName)
+  }
+
+  stopRecord = async () => {
+    const res = await AudioCaptureManager.stopRecord()
+    return res
+  }
+
+  postVoice = (res: RecordFile) => {
+    const duration = Math.ceil((res.endRecordTime - res.startRecordTime) / 1000)
+    const voiceChat = new ChatMessage(MessageType.voice, res.recordFilePath, duration)
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
     this.chatList.push(voiceChat)
     this.dataList.push({
       name: "鲁班",
@@ -300,6 +432,7 @@ export default struct ChatPage {
     })
     this.scroller.scrollToIndex(this.dataList.length)
   }
+<<<<<<< HEAD
   // 开启ai实时转换声音
   onStartSpeechRecognize = () => {
     // 如果你是完整的一句话，我把它拼接到 this.voiceToText 如果不是，实时显示
@@ -310,12 +443,19 @@ export default struct ChatPage {
       //   isFinal  这一句话 你结束了没有
       //   isLast 这一段语音你结束了没有
       // this.voiceToText = res.result
+=======
+
+  onStartSpeechRecognize = () => {
+    let sentence = ""
+    SpeechRecognizerManager.init((res) => {
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
       if (res.isFinal) {
         sentence += res.result
         this.voiceToText = sentence
       } else {
         this.voiceToText = sentence + res.result
       }
+<<<<<<< HEAD
 
     })
   }
@@ -330,6 +470,82 @@ export default struct ChatPage {
   build() {
     Column() {
       Toolbar({ title: this.name })
+=======
+    })
+  }
+
+  postText = () => {
+    const TextChat = new ChatMessage(MessageType.text, this.voiceToText)
+    this.chatList.push(TextChat)
+  }
+
+  // ✅ 发送文本消息（含纯表情）
+  private sendTextMsg() {
+    if (!this.chatText.trim()) return
+    this.dataList.push({
+      name: "鲁班",
+      headSrc: $r("app.media.ic_user_head2"),
+      msgType: 0,
+      self: true,
+      msg: this.chatText,
+    })
+    this.scroller.scrollToIndex(this.dataList.length)
+    this.chatText = ""
+  }
+
+  // ✅ 发送图片消息（相册或拍照选择的 URI）
+  private sendImageMsg(uri: string) {
+    this.dataList.push({
+      name: "鲁班",
+      headSrc: $r("app.media.ic_user_head2"),
+      msgType: 1,
+      self: true,
+      msg: "",
+      imgUri: uri,   // 使用 imgUri 字段存放动态URI
+    })
+    this.scroller.scrollToIndex(this.dataList.length)
+  }
+
+  // ✅ 切换表情面板
+  private toggleEmojiPanel() {
+    this.showEmojiPanel = !this.showEmojiPanel
+    if (this.showEmojiPanel) {
+      this.showMorePanel = false
+      this.showFuncBarWithAnim(false)
+      // 收起键盘
+      this.controller.stopEditing()
+    }
+  }
+
+  // ✅ 切换更多面板
+  private toggleMorePanel() {
+    if (!this.showMorePanel) {
+      this.inputType = WXInputType.keyboard
+    }
+    this.showMorePanel = !this.showMorePanel
+    if (this.showMorePanel) {
+      this.showEmojiPanel = false
+      this.controller.stopEditing()
+    }
+    this.showFuncBarWithAnim(false)
+  }
+
+  private showFuncBarWithAnim(show: boolean) {
+    animateTo({ duration: 400, curve: Curve.Ease }, () => {
+      if (show) {
+        this.funcBarHeight = 250;
+      } else {
+        this.funcBarHeight = 0;
+      }
+      this.showFuncBar = show;
+    })
+  }
+
+  build() {
+    Column() {
+      Toolbar({ title: this.name })
+
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
       List({ space: 20, initialIndex: this.dataList.length, scroller: this.scroller }) {
         ForEach(this.dataList, (item: ChatContentItemData) => {
           ListItem() {
@@ -345,12 +561,24 @@ export default struct ChatPage {
         }
       }
       .width("100%")
+<<<<<<< HEAD
       .height(0)
       // .divider({ strokeWidth: 0.8, color: '#f0f0f0', startMargin: 90, endMargin: 0 }) // 每行之间的分界线
       .layoutWeight(1)
 
       Row() {
 
+=======
+      .layoutWeight(1)
+      .onClick(() => {
+        // ✅ 点击消息列表时，收起所有面板
+        this.showEmojiPanel = false
+        this.showMorePanel = false
+      })
+
+      // ──── 输入栏 ────
+      Row() {
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
         if (this.inputType == WXInputType.keyboard) {
           Image($r("app.media.ic_use_voice"))
             .width(33)
@@ -375,6 +603,7 @@ export default struct ChatPage {
             .padding({ left: 8, right: 8 })
             .fontSize(20)
             .fontColor(Color.Black)
+<<<<<<< HEAD
             .borderRadius(8)// 设置stateStyles，解决点击编辑框会变色的问题
             .stateStyles({
               normal: {.backgroundColor(Color.White)
@@ -389,6 +618,21 @@ export default struct ChatPage {
           // .onSubmit(() => {
           //   prompt.showToast({ message: this.chatText })
           // })
+=======
+            .borderRadius(8)
+            .stateStyles({
+              normal: { .backgroundColor(Color.White) },
+              pressed: { .backgroundColor(Color.White) },
+              clicked: { .backgroundColor(Color.White) },
+              focused: { .backgroundColor(Color.White) }
+            })
+            .onFocus(() => {
+              // ✅ 输入框获取焦点时，收起两个面板
+              this.showEmojiPanel = false
+              this.showMorePanel = false
+            })
+
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
         } else {
           Image($r("app.media.ic_use_keyboard"))
             .width(33)
@@ -412,16 +656,31 @@ export default struct ChatPage {
             .onTouch(this.onPressTalk)
         }
 
+<<<<<<< HEAD
 
         Image($r("app.media.ic_emoji_pack"))
+=======
+        // ✅ 表情按钮：点击切换表情面板，面板打开时图标变为键盘图标
+        Image(this.showEmojiPanel
+          ? $r("app.media.ic_use_keyboard")
+          : $r("app.media.ic_emoji_pack"))
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
           .width(33)
           .height(33)
           .borderRadius(4)
           .margin({ left: 15, right: 5 })
           .objectFit(ImageFit.Cover)
+<<<<<<< HEAD
           .onClick(unDevTip)
 
 
+=======
+          .onClick(() => {
+            this.toggleEmojiPanel()
+          })
+
+        // ✅ 发送按钮（有文字时显示）
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
         Text("发送")
           .fontColor(Color.White)
           .width(65)
@@ -436,6 +695,10 @@ export default struct ChatPage {
             this.sendTextMsg()
           })
 
+<<<<<<< HEAD
+=======
+        // ✅ 更多按钮（无文字时显示）
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
         Image($r("app.media.ic_add"))
           .width(33)
           .height(33)
@@ -444,12 +707,17 @@ export default struct ChatPage {
           .margin({ left: 15, right: 8 })
           .objectFit(ImageFit.Cover)
           .onClick(() => {
+<<<<<<< HEAD
             if (!this.showFuncBar) {
               this.inputType = WXInputType.keyboard
             }
             this.showFuncBarWithAnim(!this.showFuncBar)
           })
 
+=======
+            this.toggleMorePanel()
+          })
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
       }
       .padding({ top: 10, bottom: 10 })
       .alignItems(VerticalAlign.Bottom)
@@ -461,6 +729,39 @@ export default struct ChatPage {
         .strokeWidth(1)
         .lineCap(LineCapStyle.Round)
 
+<<<<<<< HEAD
+=======
+      // ✅ 表情面板（与更多面板互斥）
+      if (this.showEmojiPanel) {
+        EmojiPanel({
+          onEmojiClick: (emoji: string) => {
+            if (emoji === 'DELETE') {
+              // ✅ 用正则处理多字节 emoji 退格，兼容 ArkTS
+              if (this.chatText.length > 0) {
+                const match = this.chatText.match(/[\s\S]$/u)
+                if (match) {
+                  this.chatText = this.chatText.slice(0, this.chatText.length - match[0].length)
+                }
+              }
+            } else {
+              this.chatText += emoji
+            }
+          }
+        })
+      }
+
+      // ✅ 更多面板（相册/拍照）
+      if (this.showMorePanel) {
+        ChatMorePanel({
+          onImageSelected: (uri: string) => {
+            this.sendImageMsg(uri)
+            this.showMorePanel = false
+          }
+        })
+      }
+
+      // 原有功能栏（暂时保留，高度为0时不显示）
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
       ChatFunctionBar()
         .height(this.funcBarHeight)
 
@@ -469,6 +770,7 @@ export default struct ChatPage {
     .height("100%")
     .backgroundColor("#f1f1f1")
     .padding({ bottom: WindowManager.navBarHeight })
+<<<<<<< HEAD
   }
 
   private sendTextMsg() {
@@ -492,11 +794,16 @@ export default struct ChatPage {
       }
       this.showFuncBar = show;
     })
+=======
+    // ✅ 移除 expandSafeArea(KEYBOARD)，防止键盘弹起时把表情/更多面板往上推
+    // 输入框通过 TextArea 自身响应键盘，面板固定高度贴底不受影响
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
   }
 
   @Builder
   buildRecordVoiceView() {
     Column() {
+<<<<<<< HEAD
       // 中心波浪线
       Row() {
         if (this.pressCancelVoicePostText !== PressCancelVoicePostText.postText) {
@@ -506,6 +813,13 @@ export default struct ChatPage {
         } else {
           Scroll() {
             // 显示录音的文字
+=======
+      Row() {
+        if (this.pressCancelVoicePostText !== PressCancelVoicePostText.postText) {
+          this.vocalPrint()
+        } else {
+          Scroll() {
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
             Text(this.voiceToText)
               .fontSize(12)
               .fontColor("#666")
@@ -517,6 +831,7 @@ export default struct ChatPage {
         Text()
           .width(10)
           .height(10)
+<<<<<<< HEAD
           .backgroundColor(this.pressCancelVoicePostText === PressCancelVoicePostText.cancelVoice ? Color.Red :
             "#95EC6A")
           .position({
@@ -529,10 +844,17 @@ export default struct ChatPage {
           .rotate({
             angle: 45
           })
+=======
+          .backgroundColor(this.pressCancelVoicePostText === PressCancelVoicePostText.cancelVoice ? Color.Red : "#95EC6A")
+          .position({ bottom: -5, left: "50%" })
+          .translate({ x: "-50%" })
+          .rotate({ angle: 45 })
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
       }
       .width("50%")
       .height(80)
       .backgroundColor(this.pressCancelVoicePostText === PressCancelVoicePostText.cancelVoice ? Color.Red : "#95EC6A")
+<<<<<<< HEAD
       .position({
         top: "40%",
         left: "50%"
@@ -540,13 +862,21 @@ export default struct ChatPage {
       .translate({
         x: "-50%"
       })
+=======
+      .position({ top: "40%", left: "50%" })
+      .translate({ x: "-50%" })
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
       .borderRadius(10)
       .justifyContent(FlexAlign.Center)
       .alignItems(VerticalAlign.Center)
 
+<<<<<<< HEAD
       // 取消和转文字
       Row() {
         // X
+=======
+      Row() {
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
         Row() {
           Text("X")
             .fontSize(20)
@@ -554,8 +884,12 @@ export default struct ChatPage {
             .height(80)
             .borderRadius("50%")
             .fontColor(this.pressCancelVoicePostText === PressCancelVoicePostText.cancelVoice ? "#333" : Color.Gray)
+<<<<<<< HEAD
             .backgroundColor(this.pressCancelVoicePostText === PressCancelVoicePostText.cancelVoice ? Color.White :
               "#333")
+=======
+            .backgroundColor(this.pressCancelVoicePostText === PressCancelVoicePostText.cancelVoice ? Color.White : "#333")
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
             .textAlign(TextAlign.Center)
             .align(Alignment.Center)
             .fontColor("#ccc")
@@ -563,7 +897,10 @@ export default struct ChatPage {
             .rotate({ angle: -15 })
         }
 
+<<<<<<< HEAD
         // 文
+=======
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
         Row() {
           Text("文")
             .fontSize(20)
@@ -578,11 +915,15 @@ export default struct ChatPage {
             .rotate({ angle: 15 })
         }
 
+<<<<<<< HEAD
         // 3  松开发送
+=======
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
         Text(this.pressCancelVoicePostText === PressCancelVoicePostText.cancelVoice ? '取消发送' :
           (this.pressCancelVoicePostText === PressCancelVoicePostText.postText ? '转换文字' : "松开发送"))
           .fontColor("#fff")
           .width("100%")
+<<<<<<< HEAD
           .position({
             bottom: 0,
             left: 0
@@ -598,18 +939,33 @@ export default struct ChatPage {
         left: 35, right: 35
       })
 
+=======
+          .position({ bottom: 0, left: 0 })
+          .textAlign(TextAlign.Center)
+      }
+      .width("100%")
+      .position({ bottom: "23%" })
+      .justifyContent(FlexAlign.SpaceBetween)
+      .padding({ left: 35, right: 35 })
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
 
       Stack() {
         Text()
           .width(800)
           .height(800)
           .backgroundColor("#AAAAAA")
+<<<<<<< HEAD
           .borderRadius("50%")// .position({ top: 0 ,left:"-50%"})
             // .position({ top: 0 ,left:"-50%"})
           .position({ top: 0, left: "50%" })
           .translate({
             x: "-50%",
           })
+=======
+          .borderRadius("50%")
+          .position({ top: 0, left: "50%" })
+          .translate({ x: "-50%" })
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
 
         Image($r("app.media.ic_voice_msg_left"))
           .width(33)
@@ -619,9 +975,13 @@ export default struct ChatPage {
       .width("100%")
       .height(150)
       .alignContent(Alignment.Center)
+<<<<<<< HEAD
       .position({
         bottom: 0
       })
+=======
+      .position({ bottom: 0 })
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
       .id("bottom_bubble")
       .onAppear(() => {
         let modePosition: componentUtils.ComponentInfo = componentUtils.getRectangleById("bottom_bubble");
@@ -630,13 +990,17 @@ export default struct ChatPage {
         this.bubbleScreenOffset.width = px2vp(modePosition.size.width)
         this.bubbleScreenOffset.height = px2vp(modePosition.size.height)
       })
+<<<<<<< HEAD
 
+=======
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
     }
     .width("100%")
     .height("100%")
     .backgroundColor("#9F000000")
   }
 
+<<<<<<< HEAD
   /**
    * 录音中的 动态声纹波浪
    */
@@ -646,6 +1010,12 @@ export default struct ChatPage {
       .onDisAppear(() => {
         clearInterval(this.voiceTimeId)
       })
+=======
+  @Builder
+  vocalPrint() {
+    Canvas(this.context)
+      .onDisAppear(() => { clearInterval(this.voiceTimeId) })
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
       .width('80%')
       .height('80%')
       .onReady(() => {
@@ -663,6 +1033,7 @@ export default struct ChatPage {
 
   private async startVibration() {
     try {
+<<<<<<< HEAD
       // 触发马达振动
       vibrator.startVibration({
         type: 'time',
@@ -682,3 +1053,9 @@ const unDevTip = () => {
   Toast.show("功能正在开发中...")
 }
 
+=======
+      vibrator.startVibration({ type: 'time', duration: 100 }, { id: 0, usage: 'touch' }, () => {})
+    } catch (err) {}
+  }
+}
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d

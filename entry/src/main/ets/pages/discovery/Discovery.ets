@@ -1,6 +1,10 @@
 import ListMenuItem from '../../component/ListMenuItem'
 import WechatToolbar from '../../component/WechatToolbar'
+<<<<<<< HEAD
 import router from '@ohos.router'   // ← 第一步：加这一行
+=======
+import router from '@ohos.router';
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
 @Preview
 @Component
 export default struct Discovery {
@@ -9,11 +13,14 @@ export default struct Discovery {
       WechatToolbar({ title: "发现" })
 
       ListMenuItem({ title: "朋友圈", iconSrc: $r('app.media.ic_moment') })
+<<<<<<< HEAD
         .onClick(() => {
           router.pushUrl({
             url: 'pages/discovery/moments/MomentsPage'
           })
         })
+=======
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
 
       Divider()
         .vertical(false)
@@ -35,6 +42,13 @@ export default struct Discovery {
       ListMenuItem({ title: "听一听",
         iconSrc: $r('app.media.ic_listen')
       })
+<<<<<<< HEAD
+=======
+        .onClick(() => {
+          // 重点：路径必须正确！
+          router.pushUrl({ url: 'pages/discovery/Listen' });
+        })
+>>>>>>> 56b49ca3a1d1dfe7f2835d76bacad57086da3f7d
 
       Divider()
         .vertical(false)
